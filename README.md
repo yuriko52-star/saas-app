@@ -9,3 +9,7 @@ composer install
 cp .env.example .env  
 php artisan key:generate  
 php artisan migrate
+composer require laravel/breeze --dev
+php artisan breeze:install
+npm install(src内で)  
+npm run build
