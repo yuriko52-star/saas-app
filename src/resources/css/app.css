@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.box {
+    max-width: 1000px;
+    margin: 100px auto;
+}
+.page-title {
+    color: blue;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+.create-link {
+    display: inline-block;
+    font-weight: bold;
+    color: blue;
+    border-bottom: 1px solid blue;
+}
+.table {
+    margin-top: 100px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+th {
+    background-color: #f5f5f5;
+}
+td {
+    text-align: center;
+}
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.edit-link {
+    background-color: blue;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+.delete-btn {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+.create-box,
+.update-box {
+    max-width: 600px;
+    margin: 100px auto;
+}
+dl {
+    width: 100%;
+    text-align: center;
+}
+dt {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 700;
+}
+dd {
+    text-align: center;
+}
+input {
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+.register-btn,
+.update-btn {
+    display: block;
+    margin: 30px auto;
+    width: 200px;
+    padding: 10px;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 5px;
+}
+.error {
+    color: red;
+    font-weight: 800;
+}

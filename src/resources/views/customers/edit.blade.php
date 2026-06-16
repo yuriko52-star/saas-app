@@ -1,27 +1,42 @@
 <x-app-layout>
-    <h1>顧客編集</h1>
+    <div class="update-box">
+    <h1 class="page-title">顧客編集</h1>
     <form action="{{ route('customers.update', $customer) }}" method="POST">
         @csrf
         @method('PATCH')
-        <div>名前
-            <input type="text" name="name"
-            value="{{ $customer->name }}">
-        </div>
-        <div>
-            メール
-            <input type="email" name="email"
-            value="{{ $customer->email }}">
-        </div>
-        <div>
-            郵便番号
-            <input type="text" name="postal_code"
-            value="{{ $customer->postal_code }}">
-        </div>
-        <div>
-            住所
-            <input type="text" name="address"
-            value="{{ $customer->address }}">
-        </div>
-        <button type="submit">更新</button>
+        <dl>
+            <dt>名前</dt>
+        
+            <dd><input type="text" name="name"
+            value="{{ old('name',$customer->name) }}">
+                <p class="error">
+                    @error('name')
+                    {{ $message }}
+                    @enderror
+                </p>
+            </dd>    
+        
+            <dt>メール</dt>
+            <dd><input type="email" name="email"
+            value="{{ old('email',$customer->email) }}">
+                <p class="error">
+                    @error('email')
+                    {{ $message }}
+                    @enderror
+                </p></dd>    
+        
+        
+            <dt>郵便番号</dt>    
+            <dd><input type="text" name="postal_code"
+            value="{{ old('postal_code',$customer->postal_code) }}"></dd>    
+        
+        
+            <dt>住所</dt>
+        
+            <dd><input type="text" name="address"
+            value="{{ old('address',$customer->address) }}"></dd>    
+        </dl>
+        <button type="submit"class="update-btn">更新</button>
     </form>
+    </div>
 </x-app-layout>
