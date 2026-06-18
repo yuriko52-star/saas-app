@@ -35,5 +35,6 @@
         
         @endforeach
      </table>
+     {{ $customers->links() }}
     </div>
 </x-app-layout>
