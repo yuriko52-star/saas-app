@@ -18,6 +18,23 @@
     color: blue;
     border-bottom: 1px solid blue;
 }
+.search-select,
+.search-input {
+    margin-top: 30px;
+}
+.search-select {
+    margin-right: 30px;
+}
+.search-input {
+    width: 30%;
+    margin-right: 30px;
+}
+.search-btn {
+    padding: 10px;
+    background-color: #2563eb;
+    color: #fff;
+    border-radius: 3px;
+}
 .table {
     margin-top: 100px;
     width: 100%;
