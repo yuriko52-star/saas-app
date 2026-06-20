@@ -15,13 +15,17 @@ class CustomerController extends Controller
     {
         $customers = Customer::query();
         if($request->filled('keyword')) {
-            if($request->search_type === 'name') {
+            if($request->search_type=== 'all') {
+                $customers->where(function ($query) use ($request) {
+                    $query->where('name', 'like', "%{$request->keyword}%")
+                        ->orWhere("email", "like", "%{$request->keyword}%")
+                        ->orWhere('postal_code', 'like', "%{$request->keyword}%");
+                });
+            } elseif($request->search_type === 'name') {
                 $customers->where('name', 'like', "%{$request->keyword}%");
-            }
-            if($request->search_type === 'email') {
+            } elseif($request->search_type === 'email') {
                 $customers->where('email', 'like', "%{$request->keyword}%");
-            }
-            if($request->search_type === 'postal_code') {
+            }elseif($request->search_type === 'postal_code') {
                 $customers->where('postal_code', 'like', "%{$request->keyword}%");
             }
         }
