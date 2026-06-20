@@ -11,9 +11,21 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::query();
+        if($request->filled('keyword')) {
+            if($request->search_type === 'name') {
+                $customers->where('name', 'like', "%{$request->keyword}%");
+            }
+            if($request->search_type === 'email') {
+                $customers->where('email', 'like', "%{$request->keyword}%");
+            }
+            if($request->search_type === 'postal_code') {
+                $customers->where('postal_code', 'like', "%{$request->keyword}%");
+            }
+        }
+        $customers = $customers->paginate(10)->withQueryString();
         // $customers = Customer::all();
         return view('customers.index', compact('customers'));
     }
