@@ -8,7 +8,8 @@
     <!--検索機能  -->
     <form action="{{ route('customers.index') }}" method="GET">
         <select name="search_type"class="search-select">
-            <option value="name {{ request('search_type')=== 'name' ? 'selected' : '' }}">名前</option>
+            <option value="all"{{ request('search_type')=== 'all' ? 'selected' : '' }}>すべて</option>
+            <option value="name" {{ request('search_type')=== 'name' ? 'selected' : '' }}>名前</option>
             <option value="email" {{ request('search_type')=== 'email' ? 'selected' : '' }}>メールアドレス</option>
             <option value="postal_code" {{ request('search_type')=== 'postal_code' ? 'selected' : '' }}>郵便番号</option>
             <input type="text" class="search-input" name="keyword" value="{{ request('keyword') }}">
