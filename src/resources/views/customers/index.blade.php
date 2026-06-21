@@ -2,6 +2,10 @@
     <div class="box">
     <h1 class="page-title">顧客一覧</h1>
     <a href="{{ route('customers.create') }}" class="create-link">新規作成</a>
+    <a href="{{ route('customers.export',[
+    'search_type' => request('search_type'),
+    'keyword' => request('keyword'),
+    ]) }}" class="export-link">CSV出力</a>
 
     <!-- あとでCSVインポート -->
     

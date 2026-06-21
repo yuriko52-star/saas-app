@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CustomerController extends Controller
 {
@@ -93,5 +94,63 @@ class CustomerController extends Controller
     {
         $customer->delete();
         return redirect()->route('customers.index');
+    }
+    public function export(Request $request)
+    {
+        $customers = Customer::query();
+        if($request->filled('keyword')) {
+            if($request->search_type === 'name') {
+                $customers->where('name', 'like', "%{$request->keyword}%");
+            } elseif ($request->search_type === 'email') {
+                $customers->where('email', 'like', "%{$request->keyword}%");
+            } elseif($request->search_type === 'postal_code') {
+                $customers->where('postal_code', 'like', "%{$request->keyword}%");
+            } elseif($request->search_type === 'all') {
+                $customers->where(function ($query) use ($request) {
+                    $query->where(
+                        'name',
+                        'like',
+                        "%{$request->keyword}%"
+                    )
+                        ->orWhere('email', 'like', "%{$request->keyword}%")
+                        ->orWhere('postal_code', 'like', "%{$request->keyword}%");
+                });
+            }
+        }
+        $customers = $customers->get();
+        // $customers = Customer::all();
+        $response = new StreamedResponse(function () use ($customers) {
+            $handle = fopen('php://output', 'W');
+
+            fwrite($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+            fputcsv($handle, [
+                'ID',
+                '名前',
+                'メールアドレス',
+                '郵便番号',
+                '住所',
+            ]);
+
+            foreach ($customers as $customer) {
+                fputcsv($handle, [
+                    $customer->id,
+                    $customer->name,
+                    $customer->email,
+                    $customer->postal_code,
+                    $customer->address,
+                ]);
+            }
+            fclose($handle);
+        });
+        $response->headers->set(
+            'Content-type',
+            'text/csv'
+        );
+        $response->headers->set(
+            'Content-Disposition',
+            'attachment: filename=customers.csv'
+        );
+        return $response;
     }
 }
