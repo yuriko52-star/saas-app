@@ -13,14 +13,18 @@
     font-weight: bold;
 }
 .create-link,
-.export-link {
+.export-link,
+.import-link {
     display: inline-block;
     font-weight: bold;
     color: blue;
     border-bottom: 1px solid blue;
     margin-right: 30px;
 }
-
+.message {
+    color: green;
+    font-weight: bold;
+}
 .search-select,
 .search-input {
     margin-top: 30px;
@@ -32,7 +36,8 @@
     width: 30%;
     margin-right: 30px;
 }
-.search-btn {
+.search-btn,
+.import-btn {
     padding: 10px;
     background-color: #2563eb;
     color: #fff;
@@ -73,7 +78,8 @@ td {
     border-radius: 5px;
 }
 .create-box,
-.update-box {
+.update-box,
+.import-box {
     max-width: 600px;
     margin: 100px auto;
 }

@@ -153,4 +153,43 @@ class CustomerController extends Controller
         );
         return $response;
     }
+
+    public function importForm()
+    {
+        return view('customers.import');
+    }
+
+    public function import(Request $request)
+    {
+        //  dd('import start');
+        $request->validate([
+            'csv_file' => 'required|file|mimes:csv,txt',
+        ]);
+// dd('validation ok');
+        $file = $request->file('csv_file');
+        // dd($file);
+        $handle = fopen($file->getPathname(), 'r');
+         fgetcsv($handle);
+        //  dd(fgetcsv($handle));
+
+        while (($row = fgetcsv($handle)) !== false) {
+            //    dd($row); 
+            Customer::create
+            ([
+                'name' => $row[0],
+                'email' => $row[1],
+                'postal_code' => $row[2],
+                'address' => $row[3],
+
+            ]);
+           
+        }
+        // dd('finished');
+            fclose($handle);
+
+            return redirect()
+                ->route('customers.index')
+                ->with('success', 'CSVを取り込みました');
+        
+    }
 }
