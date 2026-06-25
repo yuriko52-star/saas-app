@@ -18,6 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::get('/customers/export', [CustomerController::class,'export'])->name('customers.export');
+
+    Route::get('/customers/import', [CustomerController::class, 'importForm'])->name('customers.import.form');
+
+    Route::post('/customers/import', [CustomerController::class,'import'])->name('customers.import');
     Route::resource('customers', CustomerController::class);
 });
 

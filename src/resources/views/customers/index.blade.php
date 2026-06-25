@@ -6,8 +6,15 @@
     'search_type' => request('search_type'),
     'keyword' => request('keyword'),
     ]) }}" class="export-link">CSV出力</a>
+    <a href="{{ route('customers.import.form') }}" class="import-link">CSVインポート</a>
 
-    <!-- あとでCSVインポート -->
+   
+     
+    @if(session('success'))
+    <p class="message">
+        {{ session('success') }}
+    </p>
+    @endif
     
     <!--検索機能  -->
     <form action="{{ route('customers.index') }}" method="GET">
