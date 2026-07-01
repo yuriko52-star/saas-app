@@ -6,6 +6,9 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -171,8 +174,37 @@ class CustomerController extends Controller
         $handle = fopen($file->getPathname(), 'r');
          fgetcsv($handle);
         //  dd(fgetcsv($handle));
+        $errors = [];
+        $line = 2;
+        DB::beginTransaction();
 
-        while (($row = fgetcsv($handle)) !== false) {
+        try {
+            while (($row = fgetcsv($handle)) !== false) {
+                $validator = Validator::make(
+                [
+                    'name' => $row[0] ?? null,
+                    'email' => $row[1] ?? null,
+                    'postal_code' => $row[2] ?? null,
+                    'address' => $row[3] ?? null,
+                ],
+                [
+                    'name' => ['required'],
+                    'email' => ['required', 'email'],
+                    'postal_code' => ['nullable'],
+                    'address' => ['nullable'],
+                ],
+                [
+                    'name.required' => 'お名前を入力してください',
+                    'email.required' => 'メールアドレスを入力してください',
+                    'email.email' => '有効なメール形式で入力してください',
+                ]
+            );
+            if($validator->fails()) {
+                $errors[] = "{$line}行目:" . $validator->errors()->first();
+                $line++;
+
+                continue;
+            }
             //    dd($row); 
             Customer::create
             ([
@@ -182,14 +214,25 @@ class CustomerController extends Controller
                 'address' => $row[3],
 
             ]);
+            $line++;
            
         }
         // dd('finished');
             fclose($handle);
+            if(!empty($errors)) {
+            DB::rollBack();
 
-            return redirect()
+            return back()->with('errors_csv', $errors);
+        }
+        DB::commit();
+        
+        return redirect()
                 ->route('customers.index')
                 ->with('success', 'CSVを取り込みました');
-        
+        } catch (\Exception $e) {
+            DB::rollBack();
+            fclose($handle);
+            throw $e;
+        }
     }
 }

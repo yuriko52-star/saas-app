@@ -10,6 +10,16 @@
 
             <button type="submit" class="import-btn">インポート</button>
         </form>
+        @if(session('errors_csv'))
+            <div>
+                <ul>
+                    @foreach(session('errors_csv') as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+
+            </div>
+        @endif
     </div>
 
 </x-app-layout>
