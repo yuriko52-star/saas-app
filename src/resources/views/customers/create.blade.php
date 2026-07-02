@@ -22,9 +22,9 @@
                     </p>
                 </dd>
                 <dt>郵便番号</dt>
-                <dd><input type="text" name="postal_code" value="{{ old('postal_code') }}"></dd>
+                <dd><input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}"></dd>
                 <dt>住所</dt>
-                <dd><input type="text" name="address" value="{{ old('address') }}"></dd>
+                <dd><input type="text" name="address" id="address" value="{{ old('address') }}"></dd>
             </dl>
             <button type="submit" class="register-btn">登録</button>
         </form>
