@@ -27,13 +27,13 @@
         
         
             <dt>郵便番号</dt>    
-            <dd><input type="text" name="postal_code"
+            <dd><input type="text" name="postal_code" id="postal_code"
             value="{{ old('postal_code',$customer->postal_code) }}"></dd>    
         
         
             <dt>住所</dt>
         
-            <dd><input type="text" name="address"
+            <dd><input type="text" name="address" id="address"
             value="{{ old('address',$customer->address) }}"></dd>    
         </dl>
         <button type="submit"class="update-btn">更新</button>
