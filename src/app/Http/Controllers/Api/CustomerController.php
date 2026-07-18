@@ -13,8 +13,23 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $query = Customer::query();
+
+        if(request()->has('keyword')) {
+            $keywords = preg_split('/\s+/', trim(request('keyword')));
+            foreach ($keywords as $keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%")
+                        ->orWhere('email', 'like', "%{$keyword}%")
+                        ->orWhere('postal_code', 'like', "%{$keyword}%")
+                        ->orWhere('address', 'like', "%{$keyword}%");
+                });
+            }   
+
+            
+        }
         return response()->json(
-            Customer::paginate(10),
+            $query->paginate(10),
             200,
             [],
             JSON_UNESCAPED_UNICODE
