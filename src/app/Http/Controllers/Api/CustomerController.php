@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -25,8 +26,6 @@ class CustomerController extends Controller
                         ->orWhere('address', 'like', "%{$keyword}%");
                 });
             }   
-
-            
         }
         return response()->json(
             $query->paginate(10),
@@ -39,9 +38,10 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+        $customer = Customer::create($request->validated());
+        return response()->json($customer, 201);
     }
 
     /**

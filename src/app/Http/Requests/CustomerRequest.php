@@ -24,8 +24,8 @@ class CustomerRequest extends FormRequest
         return [
             'name' => ['required'],
              'email' => ['required','email'],
-             'postal_code' => ['nullable'],
-             'address' => ['nullable'],
+             'postal_code' => ['required'],
+             'address' => ['required'],
         ];
     }
     public function messages()
@@ -34,6 +34,8 @@ class CustomerRequest extends FormRequest
             'name.required' => 'お名前を入力してください',
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => '有効なメール形式で入力してください',
+            'postal_code.required' => '郵便番号を入力してください',
+            'address.required' => '住所を入力してください',
         ];
     }
 }
