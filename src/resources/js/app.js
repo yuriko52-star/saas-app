@@ -1,9 +1,0 @@
-import "./bootstrap";
-import { setupPostalCodeApi } from "./postalCode";
-
-import Alpine from "alpinejs";
-
-window.Alpine = Alpine;
-
-Alpine.start();
-setupPostalCodeApi();
